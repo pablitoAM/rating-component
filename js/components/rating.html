@@ -1,0 +1,46 @@
+<template id=”rating-template”>  
+<style>
+    
+
+</style>
+  <div>
+    <div class="display-votes">        
+
+    </div>
+    <div class="voting-area">
+        
+    </div>
+  </div>  
+</template>
+<script>
+    class Rating extends HTMLElement {
+
+    static get observedAttributes() { return ['product-id', 'up-count', 'total-count']; } // TODO
+
+    constructor() {
+        super(); // Always call super first in constructor
+        let shadowRoot = this.attachShadow({mode: 'open'});
+        let template = document.querySelector('#rating-template');
+        this.shadowRoot.appendChild(template.content.cloneNode(true));
+    }
+
+    connectedCallback() {
+
+    }
+
+    disconnectedCallback() {
+
+    }
+
+    attributeChangedCallback(attributeName, oldValue, newValue, namespace) {
+        console.log(`AttributeChanged. attr=${attributeName}, oldValue=${oldValue}, newValue=${newValue}`);      
+    }
+
+    adoptedCallback(oldDocument, newDocument) {
+
+    }
+}
+
+// Define the new element
+customElements.define('x-rating', Rating);
+</script>
