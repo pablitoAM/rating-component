@@ -1,0 +1,123 @@
+<template id="x-rating">
+    <style>
+    .container {
+        display: flex;
+        justify-content: space-evenly;
+    }
+
+    .hidden {
+        display: none;
+    }
+</style>
+<div>
+    <div class="container display-votes">        
+        <span class="btn btn-up"></span>
+        <span class="rate"></span>
+        <span class="btn btn-down"></span>
+    </div>
+    <div class="voting-area hidden">
+
+    </div>
+</div> 
+</template>
+<script>
+    customElements.define('x-rating', class extends HTMLElement {
+
+    static get observedAttributes() { return ['product-id', 'rate']; } // TODO
+
+    constructor() {
+        super(); // Always call super first in constructor
+        this._initShadowDom();
+    }
+
+    _initShadowDom() {
+        let shadowRoot = this.attachShadow({mode: 'open'});
+        shadowRoot.appendChild(this.template.content.cloneNode(true));
+    }
+
+    get template() {   
+        let thisDoc = (document._currentScript || document.currentScript).ownerDocument;     
+        return thisDoc.querySelector('#x-rating')
+    }
+
+    get rate() {
+        return this.hasAttribute('rate');
+    }
+
+    set rate(val) {
+        if (val) {
+            this.setAttribute('rate', val);
+        } else {
+            this.setAttribute('rate', DEFAULT_RATE);
+        }
+    }
+
+    get upCount(){
+        return 5;
+    }
+
+    get totalCount(){
+        return 10;
+    }    
+
+    connectedCallback() {
+        console.log(`ConnectedCallback`)
+        this.initAttributes()
+        this.paintVotes()
+        this.enableBehaviour()
+    } 
+
+    initAttributes(){
+        if (!this.hasAttribute('product-id')){
+            throw "The product-id attribute is mandatory"
+        }
+        if (!this.hasAttribute('rate')){
+            this.setAttribute('rate', DEFAULT_RATE);  // TODO      
+        }
+    }  
+
+    paintVotes(){
+        this.rate = this.roundTo(this.upCount / this.totalCount, 2)
+        console.log(`Rate ${this.rate}`)
+    }
+
+    roundTo(n, digits) {
+     if (digits === undefined) {
+       digits = 0;
+     }
+
+     var multiplicator = Math.pow(10, digits);
+     n = parseFloat((n * multiplicator).toFixed(11));
+     var test =(Math.round(n) / multiplicator);
+     return +(test.toFixed(digits));
+   }
+
+    enableBehaviour(){
+
+    }
+
+    disconnectedCallback() {
+        console.log(`DisconnectedCallback`)
+        // TODO
+    }
+
+    disableBehaviour(){
+
+    }
+
+    attributeChangedCallback(attributeName, oldValue, newValue, namespace) {
+        console.log(`AttributeChanged. attr=${attributeName}, oldValue=${oldValue}, newValue=${newValue}`);
+        switch(attributeName){
+            case "rate": 
+                console.log(`Rate changed to ${newValue}`);
+                break;
+            default: // do nothing
+            break;
+        } 
+    }
+
+    adoptedCallback(oldDocument, newDocument) {
+        console.log(`AdoptedCallback. oldDocument=${oldDocument}, newDocument=${newDocument}`)
+    }    
+});
+</script>
