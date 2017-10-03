@@ -1,22 +1,46 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <title>Web Components Showcase</title>
-    <script src=js/libs/webcomponentsjs/1.0.8/webcomponents-hi-sd-ce.js></script>
-    <link rel="import" href="components/rating.html">
-    <link rel="import" href="components/voting.html">
-</head>
-<section>
-    <h2>Web Components</h2>
-    <h3>x-voting</h3>    
-    <div style="text-align: center;">
-    <x-voting
-        product-id="1234"
-        rate="0"
-        connect="true">      
-    </x-voting>
+    <head>
+        <title>Web Components Showcase</title>
+        <script src=js/libs/webcomponentsjs/1.0.8/webcomponents-hi-sd-ce.js></script>
+        <link rel="stylesheet" href="css/spectre.min.css">
+        <link rel="import" href="http://localhost:8080/components/voting.html">
+    </head>
+    <div class="container">
+        <div class="col-xs-12">
+            <h2>Web Components</h2>
+        </div>
+        <div class="columns">
+            <div class="column col-xs-6">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title h5">X-Voting for product: 1234</div>
+                        <div class="card-subtitle text-gray">Single instance of the webcomponent</div>
+                    </div>
+                    <div class="card-body centered">
+                        <x-voting
+                        product-id="1234"
+                        rate="0"
+                        endpoint="localhost:8080/product">
+                        </x-voting>
+                    </div>
+                </div>
+            </div>
+            <div class="column col-xs-6">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title h5">X-Voting for product: 2222</div>
+                        <div class="card-subtitle text-gray">Antoher instance of the webcomponent</div>
+                    </div>
+                    <div class="card-body centered">
+                        <x-voting
+                        product-id="2222"
+                        rate="0"
+                        endpoint="localhost:8080/product">
+                        </x-voting>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-
-    <hr/> 
-</section>
 </html>
